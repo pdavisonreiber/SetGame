@@ -12,6 +12,8 @@
 		D056CE2221A9CC4D00E4FCFB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D056CE2021A9CC4D00E4FCFB /* Main.storyboard */; };
 		D056CE2421A9CC5000E4FCFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D056CE2321A9CC5000E4FCFB /* Assets.xcassets */; };
 		D056CE2721A9CC5000E4FCFB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D056CE2521A9CC5000E4FCFB /* LaunchScreen.storyboard */; };
+		D056CE2F21A9CD3900E4FCFB /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D056CE2E21A9CD3900E4FCFB /* SetGame.swift */; };
+		D056CE3121A9CD9B00E4FCFB /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = D056CE3021A9CD9B00E4FCFB /* Card.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		D056CE2321A9CC5000E4FCFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D056CE2621A9CC5000E4FCFB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D056CE2821A9CC5000E4FCFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D056CE2E21A9CD3900E4FCFB /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
+		D056CE3021A9CD9B00E4FCFB /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 		D056CE1B21A9CC4D00E4FCFB /* SetGame */ = {
 			isa = PBXGroup;
 			children = (
+				D056CE2E21A9CD3900E4FCFB /* SetGame.swift */,
+				D056CE3021A9CD9B00E4FCFB /* Card.swift */,
 				D056CE1C21A9CC4D00E4FCFB /* AppDelegate.swift */,
 				D056CE1E21A9CC4D00E4FCFB /* ViewController.swift */,
 				D056CE2021A9CC4D00E4FCFB /* Main.storyboard */,
@@ -136,7 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D056CE1F21A9CC4D00E4FCFB /* ViewController.swift in Sources */,
+				D056CE2F21A9CD3900E4FCFB /* SetGame.swift in Sources */,
 				D056CE1D21A9CC4D00E4FCFB /* AppDelegate.swift in Sources */,
+				D056CE3121A9CD9B00E4FCFB /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +291,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 45N32FDDLJ;
 				INFOPLIST_FILE = SetGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -300,6 +309,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 45N32FDDLJ;
 				INFOPLIST_FILE = SetGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
