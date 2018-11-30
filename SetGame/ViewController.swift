@@ -10,18 +10,40 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    private var game = SetGame()
+    private var cardButtonAssignments: [UIButton: Card] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setLabels(.two, .three, .three, .two)
+        setInitialCardButtons()
     }
 
     @IBOutlet var cardButtons: [UIButton]!
     
     @IBAction func touchCard(_ sender: UIButton) {
-        if let cardNumber = cardButtons.index(of: sender) {
-            print("card number = \(cardNumber)")
+        if cardButtonAssignments.keys.contains(sender) {
+            //3selectButton(sender)
         }
     }
+    
+    @IBOutlet weak var scoreLabel: UILabel!
+    
+    @IBOutlet weak var moreCardsButton: UIButton!
+    
+    @IBAction func touchMoreCardsButton() {
+    }
+    
+    @IBAction func touchNewGameButton() {
+        scoreLabel.text = "Score: 0"
+        cardButtonAssignments = [:]
+        game.shuffleCards()
+        setInitialCardButtons()
+    }
+    
+    
+//    func selectButton(_ button: UIButton) {
+//        if button.strok
+//    }
     
     func colorAndShadingForAttributes(ColorAttribute: Card.Attribute, ShadingAttribute: Card.Attribute) -> [NSAttributedString.Key: Any] {
         
@@ -73,26 +95,25 @@ class ViewController: UIViewController {
         return string
     }
     
-    func setLabels(_ attribute1: Card.Attribute, _ attribute2: Card.Attribute, _ attribute3: Card.Attribute, _ attribute4: Card.Attribute) {
-        for button in cardButtons {
-            button.backgroundColor = UIColor.white
-            button.layer.cornerRadius = 8.0
-            
-            let attributes = colorAndShadingForAttributes(ColorAttribute: attribute1, ShadingAttribute: attribute2)
-            let cardString = repeatCharacterWithLineBreaks(character: characterForAttribute(attribute3), repeats: numberForAttribute(attribute4))
-            let cardAttributedString = NSAttributedString(string: cardString, attributes: attributes)
-            
-            button.setAttributedTitle(cardAttributedString, for: UIControl.State.normal)
-            
-            
+    func assignCardToButton(card: Card, button: UIButton) {
+        button.backgroundColor = UIColor.white
+        button.layer.cornerRadius = 8.0
+        
+        let attributes = colorAndShadingForAttributes(ColorAttribute: card.attributes[0], ShadingAttribute: card.attributes[1])
+        let cardString = repeatCharacterWithLineBreaks(character: characterForAttribute(card.attributes[2]), repeats: numberForAttribute(card.attributes[3]))
+        let cardAttributedString = NSAttributedString(string: cardString, attributes: attributes)
+        
+        button.setAttributedTitle(cardAttributedString, for: UIControl.State.normal)
+        
+        cardButtonAssignments[button] = card
+    }
+    
+    func setInitialCardButtons() {
+        let shuffledCardButtons = cardButtons.shuffled()
+        for index in 1...12 {
+            assignCardToButton(card: game.cards[index], button: shuffledCardButtons[index])
         }
     }
-    
-    func titleForCard(card: Card) {
-        
-    }
-    
-    
     
 }
 

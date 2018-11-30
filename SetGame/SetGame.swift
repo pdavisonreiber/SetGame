@@ -13,11 +13,13 @@ struct SetGame {
     private(set) var selectedCards: [Card]
     
     init() {
-        cards = Card.makeCards()
+        cards = Card.makeCards().shuffled()
         selectedCards = [Card]()
     }
     
-    
+    mutating func shuffleCards() {
+        cards = cards.shuffled()
+    }
     
     mutating func select(card: Card) {
         switch selectedCards.count {
