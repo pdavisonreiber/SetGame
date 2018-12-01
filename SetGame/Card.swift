@@ -81,6 +81,6 @@ struct Card {
             multiplyCards(using: index)
         }
         
-        return cards
+        return cards.shuffled()
     }
 }

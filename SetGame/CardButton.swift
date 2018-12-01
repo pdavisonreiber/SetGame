@@ -10,7 +10,7 @@ import UIKit
 
 class CardButton: UIButton {
 
-    private var assignedCard: Card?
+    private(set) var assignedCard: Card?
     
     func assignCard(_ card: Card) {
         backgroundColor = UIColor.white
@@ -22,6 +22,29 @@ class CardButton: UIButton {
         
         self.setAttributedTitle(cardAttributedString, for: UIControl.State.normal)
         assignedCard = card
+    }
+    
+    func removeAssignedCard() {
+        assignedCard = nil
+        backgroundColor = UIColor.aqua
+        self.setAttributedString = NSAttributedString(string: "")
+        button.layer.borderColor = UIColor.aqua.cgColor
+        button.layer.borderWidth = 0
+    }
+    
+    func showSelection() {
+        button.layer.borderWidth = 3.0
+        button.layer.borderColor = UIColor.red.cgColor
+        
+    }
+    
+    func removeSelection() {
+        button.layer.borderWidth = 0
+        button.layer.borderColor = UIColor.aqua.cgColor
+    }
+    
+    func showMatched() {
+        button.layer.borderColor = UIColor.green.cgColor
     }
     
     private func colorAndShadingForAttributes(ColorAttribute: Card.Attribute, ShadingAttribute: Card.Attribute) -> [NSAttributedString.Key: Any] {
