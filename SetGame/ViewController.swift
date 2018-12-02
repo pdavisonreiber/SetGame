@@ -46,6 +46,11 @@ class ViewController: UIViewController {
     @IBAction func touchNewGameButton() {
         scoreLabel.text = "Score: 0"
         game = SetGame()
+        updateViewFromModel()
+        for _ in 1...4 {
+            dealThreeCards()
+        }
+        
     }
     
     private func updateViewFromModel() {
@@ -58,9 +63,13 @@ class ViewController: UIViewController {
                     }
                 } else {
                     removeSelection(on: button)
-                    if card.isMatched { removeAssigned(card: card, from: button) }
+                    if card.isMatched { removeAssignedCard(from: button) }
                 }
             }
+        }
+        
+        if game.selectedCardsMatch {
+            enableMoreCardsButton()
         }
         
         if game.deck.count > 0 && blankCardButtons.count > 0 {
@@ -75,18 +84,34 @@ class ViewController: UIViewController {
     }
     
     private func dealThreeCards() {
-        if game.deck.count == 0 || blankCardButtons.count < 3 {
+        if game.deck.count == 0 {
             disableMoreCardsButton()
+        } else if blankCardButtons.count < 3 && !game.selectedCardsMatch {
+            disableMoreCardsButton()
+        } else if blankCardButtons.count < 3 && game.selectedCardsMatch {
+            for card in game.selectedCards {
+                if let button = cardAssignments.key(forValue: card) {
+                    removeAssignedCard(from: button)
+                    assign(card: game.deck.removeFirst(), to: button)
+                }
+                disableMoreCardsButton()
+                game.deselectAllCards()
+            }
         } else if game.selectedCardsMatch {
             for card in game.selectedCards {
                 if let button = cardAssignments.key(forValue: card) {
-                    removeAssigned(card: card, from: button)
+                    removeAssignedCard(from: button)
+                    assign(card: game.deck.removeFirst(), to: button)
                 }
             }
-            
+            game.deselectAllCards()
         } else {
             for button in blankCardButtons[0...2] {
                 assign(card: game.deck.removeFirst(), to: button)
+                if game.deck.count == 0 || blankCardButtons.count < 3 {
+                    disableMoreCardsButton()
+                }
+                updateViewFromModel()
             }
         }
     }
@@ -111,7 +136,7 @@ class ViewController: UIViewController {
         cardAssignments[button] = card
     }
     
-    func removeAssigned(card: Card, from button: UIButton) {
+    func removeAssignedCard(from button: UIButton) {
         cardAssignments[button] = nil
         button.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         button.setAttributedTitle(NSAttributedString(string: ""), for: UIControl.State.normal)
@@ -153,6 +178,7 @@ class ViewController: UIViewController {
             .foregroundColor: color.withAlphaComponent(CGFloat(0.2))
             ]
         case .three: return [
+            .foregroundColor: color,
             .strokeWidth: 10.0
             ]
         }

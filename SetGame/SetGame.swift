@@ -32,15 +32,15 @@ struct SetGame {
             switch selectedCards.count {
             case 0, 1: selectedCards.append(card)
             case 2:
-                if card.formsASet(with: selectedCards) {
-                    selectedCards.append(card)
-                    selectedCards.indices.forEach({index in selectedCards[index].isMatched = true})
-                } else {
-                    selectedCards.append(card)
+                selectedCards.append(card)
+                if selectedCards.formASet() {
+                    selectedCards.indices.forEach({ selectedCards[$0].isMatched = true})
                 }
             case 3: selectedCards = [Card]([card])
             default: print("ERROR: selectedCards.count has invalid value")
             }
+        } else if card.isMatched {
+            deselectAllCards()
         } else {
             switch selectedCards.count {
             case 0: break
@@ -48,5 +48,30 @@ struct SetGame {
             default: print("ERROR: selectedCards.count has invalid value")
                         }
         }
+    }
+    
+    mutating func deselectAllCards() {
+        selectedCards = [Card]()
+    }
+    
+}
+
+extension Array where Element: Card {
+    func haveTheSameAttributeAtIndex(_ index: Int) -> Bool {
+        assert(self.count == 3)
+        return self[0].attributes[index] == self[1].attributes[index] && self[1].attributes[index] == self[2].attributes[index]
+    }
+    
+    func haveDistinctAttributesAtIndex(_ index: Int) -> Bool {
+        assert(self.count == 3)
+        return self[0].attributes[index] != self[1].attributes[index] && self[1].attributes[index] != self[2].attributes[index] && self[0].attributes[index] != self[2].attributes[index]
+    }
+    
+    func formASet() -> Bool {
+        var matchAtIndex = [Bool]()
+        for index in self[0].attributes.indices {
+            matchAtIndex.append(self.haveTheSameAttributeAtIndex(index) || self.haveDistinctAttributesAtIndex(index))
+        }
+        return matchAtIndex.reduce(true, {$0 && $1})
     }
 }
