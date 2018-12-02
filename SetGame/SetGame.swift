@@ -18,12 +18,12 @@ struct SetGame {
     }
     
     mutating func shuffleCards() {
-        cards = cards.shuffled()
+        deck = deck.shuffled()
     }
     
-    var selectedCardsMatch {
-        get() {
-            return selectedCards.map({$0.isMatched = true}).reduce(true, {$0 && $1})
+    var selectedCardsMatch: Bool {
+        get {
+            return selectedCards.count == 3 && selectedCards.map({$0.isMatched == true}).reduce(true, {x, y in x && y})
         }
     }
     
@@ -44,7 +44,7 @@ struct SetGame {
         } else {
             switch selectedCards.count {
             case 0: break
-            case 1, 2, 3: selectedCards.remove(card)
+            case 1, 2, 3: selectedCards.remove(at: selectedCards.index(of: card)!)
             default: print("ERROR: selectedCards.count has invalid value")
                         }
         }

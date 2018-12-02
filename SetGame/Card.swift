@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Card {
+struct Card: Equatable {
     
     enum Attribute: CaseIterable {
         case one, two, three
@@ -25,10 +25,6 @@ struct Card {
     init(withAttributes attributes: [Attribute]) {
         isMatched = false
         self.attributes = attributes
-    }
-    
-    mutating func match() {
-        isMatched = true
     }
     
     private func sharesAttribute(at index: Int, with card: Card) -> Bool {
@@ -52,16 +48,16 @@ struct Card {
     }
     
     func formsASet(with cards: [Card]) -> Bool {
-        if cards.isEmpty { return false }
-        
-        assert(cards.map({
-            card in self.attributes.count == card.attributes.count
-        }).reduce(true, {x, y in x && y}), "Card.formsASetWith(\(cards)): number of attributes does not match.")
-        
-        return attributes.indices.map({
-            index in self.sharesAttribute(at: index, with: cards) || self.formsAMutuallyDistinctSet(with: cards, withRespectToAttributeAtIndex: index)
-        }).reduce(true, {x, y in x && y})
-        
+//        if cards.isEmpty { return false }
+//
+//        assert(cards.map({
+//            card in self.attributes.count == card.attributes.count
+//        }).reduce(true, {x, y in x && y}), "Card.formsASetWith(\(cards)): number of attributes does not match.")
+//
+//        return attributes.indices.map({
+//            index in self.sharesAttribute(at: index, with: cards) || self.formsAMutuallyDistinctSet(with: cards, withRespectToAttributeAtIndex: index)
+//        }).reduce(true, {x, y in x && y})
+        return true
     }
     
     static func makeCards() -> [Card] {
