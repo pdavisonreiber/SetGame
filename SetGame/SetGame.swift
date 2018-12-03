@@ -9,11 +9,18 @@
 import Foundation
 
 struct SetGame {
+    private var cards: [Card]
     var deck: [Card]
     private(set) var selectedCards: [Card]
+    var score: Int {
+        get {
+            return cards.filter({ $0.isMatched }).count
+        }
+    }
     
     init() {
-        deck = Card.makeCards()
+        cards = Card.makeCards()
+        deck = [Card](cards)
         selectedCards = [Card]()
     }
     

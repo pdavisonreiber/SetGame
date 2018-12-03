@@ -21,13 +21,18 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        cardButtons = cardButtons.shuffled()
+        
         for _ in 1...4 {
             dealThreeCards()
         }
+        
+        newGameButton.layer.cornerRadius = 8.0
+        moreCardsButton.layer.cornerRadius = 8.0
+        
     }
 
     @IBOutlet var cardButtons: [UIButton]!
-    
     @IBAction func touchCard(_ sender: UIButton) {
         if let card = cardAssignments[sender] {
             game.select(card: card)
@@ -38,14 +43,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     
     @IBOutlet weak var moreCardsButton: UIButton!
-    
     @IBAction func touchMoreCardsButton() {
         dealThreeCards()
     }
     
+    @IBOutlet weak var newGameButton: UIButton!
     @IBAction func touchNewGameButton() {
         scoreLabel.text = "Score: 0"
+        for button in cardButtons {
+            removeAssignedCard(from: button)
+        }
         game = SetGame()
+        cardAssignments = [:]
+        cardButtons = cardButtons.shuffled()
         updateViewFromModel()
         for _ in 1...4 {
             dealThreeCards()
@@ -75,6 +85,8 @@ class ViewController: UIViewController {
         if game.deck.count > 0 && blankCardButtons.count > 0 {
             enableMoreCardsButton()
         }
+        
+        scoreLabel.text = "Score: \(game.score)"
     }
     
     private var blankCardButtons: [UIButton] {
